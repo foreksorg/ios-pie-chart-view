@@ -56,6 +56,11 @@ typedef enum {
  */
 - (NSString *)pieChartView:(MCPieChartView*)pieChartView textForSliceAtIndex:(NSInteger)index;
 
+/*
+ Defines the selected text for each slice.
+ */
+- (NSString *)pieChartView:(MCPieChartView*)pieChartView selectedTextForSliceAtIndex:(NSInteger)index;
+
 @end
 
 @protocol MCPieChartViewDelegate <NSObject>

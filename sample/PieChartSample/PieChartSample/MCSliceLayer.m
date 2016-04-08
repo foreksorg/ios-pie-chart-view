@@ -182,9 +182,11 @@
             switch (self.selectionStatus) {
                 case MCNewCustomLayerSelectionStatusNotSelected:
                     self.textLabel.textColor = self.textColor;
+                    self.textLabel.text = self.normalText;
                     break;
                 case MCNewCustomLayerSelectionStatusSelected:
                     self.textLabel.textColor = self.selectedTextColor;
+                    self.textLabel.text = self.selectedText ? self.selectedText : self.normalText;
                     break;
             }
             

@@ -40,6 +40,8 @@
 @property (strong, nonatomic) UIColor *selectedTextColor;
 @property (strong, nonatomic) UIColor *selectedBackgroundColor;
 
+@property (nonatomic, strong)NSString* normalText;
+@property (nonatomic, strong)NSString* selectedText;
 @property (nonatomic) BOOL showText;
 @property (nonatomic) CGFloat externalRadius;
 @property (nonatomic) CGFloat internalRadius;

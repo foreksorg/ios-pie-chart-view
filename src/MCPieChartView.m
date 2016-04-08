@@ -76,26 +76,30 @@
     slice.value                             = value;
     slice.textDistancePercentageFromCenter  = self.textDistancePercentageFromCenter;
     
+    if ([self.dataSource respondsToSelector:@selector(pieChartView:selectedTextForSliceAtIndex:)]) {
+        slice.selectedText = [self.dataSource pieChartView:self selectedTextForSliceAtIndex:index];
+    }
+    
     if ([self.dataSource respondsToSelector:@selector(pieChartView:imageForSliceAtIndex:)]) {
         slice.mainPathImage = [self.dataSource pieChartView:self imageForSliceAtIndex:index];
     }
     
     if ([self.dataSource respondsToSelector:@selector(pieChartView:textForSliceAtIndex:)]) {
-        slice.textLabel.text = [self.dataSource pieChartView:self textForSliceAtIndex:index];
+        slice.normalText = [self.dataSource pieChartView:self textForSliceAtIndex:index];
     }
     else {
         switch (self.textStyle) {
             case MCPieChartViewTextStyleRealValue:
-                slice.textLabel.text = [NSString stringWithFormat:@"%.0f", value];
+                slice.normalText = [NSString stringWithFormat:@"%.0f", value];
                 break;
             case MCPieChartViewTextStylePercentage:
-                slice.textLabel.text = [NSString stringWithFormat:@"%.0f%%", percentage*100];
+                slice.normalText = [NSString stringWithFormat:@"%.0f%%", percentage*100];
                 break;
         }
     }
     
     angle += angleAddition;
-
+    
     return slice;
 }
 
@@ -136,7 +140,7 @@
     if ([self.delegate respondsToSelector:@selector(pieChartView:didSelectSliceAtIndex:)]) {
         [self.delegate pieChartView:self didSelectSliceAtIndex:index];
     }
-
+    
     if ([layer isKindOfClass:[MCSliceLayer class]]) {
         
         if (!self.allowsMultipleSelection) {

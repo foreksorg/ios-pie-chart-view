@@ -137,10 +137,10 @@
     CGFloat strokeWidth = (self.externalRadius - self.internalRadius)*self.strokePercentage;
     
     CGPathAddArc(self.mainPath, &transform,
-                    self.center_x, self.center_y,
-                    self.externalRadius - self.lineWidth/2,
-                    self.startAngle, self.endAngle,
-                    0);
+                 self.center_x, self.center_y,
+                 self.externalRadius - self.lineWidth/2,
+                 self.startAngle, self.endAngle,
+                 0);
     
     switch (self.selectionStatus) {
         case MCNewCustomLayerSelectionStatusNotSelected:
@@ -182,9 +182,11 @@
             switch (self.selectionStatus) {
                 case MCNewCustomLayerSelectionStatusNotSelected:
                     self.textLabel.textColor = self.textColor;
+                    self.textLabel.text = self.normalText;
                     break;
                 case MCNewCustomLayerSelectionStatusSelected:
                     self.textLabel.textColor = self.selectedTextColor;
+                    self.textLabel.text = self.selectedText ? self.selectedText : self.normalText;
                     break;
             }
             
@@ -293,34 +295,34 @@
     
     return point;
     
-//    CGFloat xc = self.center_x;
-//    CGFloat yc = self.center_y;
-//    
-//    CGPoint tanIntersectionPoint = [self getTanIntersectionPoint];
-//    CGFloat xt = tanIntersectionPoint.x;
-//    CGFloat yt = tanIntersectionPoint.y;
-//    
-//    CGFloat m = (yc - yt)/(xc - xt);
-//    CGFloat alpha = atanf(m);
-//    
-//    CGFloat x1, y1;
-//    CGFloat x2, y2;
-//    
-//    x1 = radius*cosf(alpha)+xc;
-//    y1 = radius*sinf(alpha)+yc;
-//    x2 = -radius*cosf(alpha)+xc;
-//    y2 = -radius*sinf(alpha)+yc;
-//    
-//    CGPoint fromPoint = CGPointMake(xt, yt);
-//    CGPoint point1 = CGPointMake(x1, y1);
-//    CGPoint point2 = CGPointMake(x2, y2);
-//    
-//    if (fabs(self.endAngle - self.startAngle) <= DEG2RAD(180)) {
-//        return [MCUtil getClosestPointFrom:fromPoint between:point1 and:point2];
-//    }
-//    else {
-//        return [MCUtil getFurthestPointFrom:fromPoint between:point1 and:point2];
-//    }
+    //    CGFloat xc = self.center_x;
+    //    CGFloat yc = self.center_y;
+    //
+    //    CGPoint tanIntersectionPoint = [self getTanIntersectionPoint];
+    //    CGFloat xt = tanIntersectionPoint.x;
+    //    CGFloat yt = tanIntersectionPoint.y;
+    //
+    //    CGFloat m = (yc - yt)/(xc - xt);
+    //    CGFloat alpha = atanf(m);
+    //
+    //    CGFloat x1, y1;
+    //    CGFloat x2, y2;
+    //
+    //    x1 = radius*cosf(alpha)+xc;
+    //    y1 = radius*sinf(alpha)+yc;
+    //    x2 = -radius*cosf(alpha)+xc;
+    //    y2 = -radius*sinf(alpha)+yc;
+    //
+    //    CGPoint fromPoint = CGPointMake(xt, yt);
+    //    CGPoint point1 = CGPointMake(x1, y1);
+    //    CGPoint point2 = CGPointMake(x2, y2);
+    //
+    //    if (fabs(self.endAngle - self.startAngle) <= DEG2RAD(180)) {
+    //        return [MCUtil getClosestPointFrom:fromPoint between:point1 and:point2];
+    //    }
+    //    else {
+    //        return [MCUtil getFurthestPointFrom:fromPoint between:point1 and:point2];
+    //    }
 }
 
 #pragma mark Selection Status Methods
