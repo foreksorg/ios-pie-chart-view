@@ -140,6 +140,8 @@
     if ([self.delegate respondsToSelector:@selector(pieChartView:didSelectSliceAtIndex:)]) {
         [self.delegate pieChartView:self didSelectSliceAtIndex:index];
     }
+    
+    
 
     if ([layer isKindOfClass:[MCSliceLayer class]]) {
         

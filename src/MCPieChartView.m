@@ -141,6 +141,8 @@
         [self.delegate pieChartView:self didSelectSliceAtIndex:index];
     }
     
+    
+    
     if ([layer isKindOfClass:[MCSliceLayer class]]) {
         
         if (!self.allowsMultipleSelection) {

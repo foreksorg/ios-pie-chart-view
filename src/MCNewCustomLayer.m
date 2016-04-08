@@ -45,9 +45,10 @@
     self.isPresentationLayer = NO;
     
     self.textLabel = [[UILabel alloc] init];
-    self.textLabel.adjustsFontSizeToFitWidth = YES;
+    self.textLabel.adjustsFontSizeToFitWidth = NO;
     self.textLabel.textAlignment = NSTextAlignmentCenter;
     self.textLabel.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
+    self.textLabel.numberOfLines = 0;
     [self addSublayer:self.textLabel.layer];
 }
 
@@ -160,7 +161,7 @@
             }
         }
     }
-
+    
     return [super actionForKey:event];
 }
 
@@ -171,7 +172,7 @@
             return YES;
         }
     }
-
+    
     return [super needsDisplayForKey:event];
 }
 

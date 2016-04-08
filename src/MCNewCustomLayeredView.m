@@ -169,7 +169,7 @@
                 break;
             }
         }
-    
+        
         if (!hasCopy)
         {
             [sublayers addObject:[self newLayerAtIndex:i]];
@@ -312,8 +312,10 @@
 - (void)findSelectedLayer:(CGPoint)point
 {
     NSArray *layers = [self getAllItems];
+    MCNewCustomLayer *bringFrontLayer = nil;
     
-    [layers enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+    
+    for (id obj in layers) {
         if ([obj isKindOfClass:[MCNewCustomLayer class]]) {
             MCNewCustomLayer *layer = (MCNewCustomLayer *)obj;
             
@@ -322,9 +324,15 @@
             
             if (CGPathContainsPoint(path, &transform, point, 0)) {
                 [self customLayeredView:self didTouchMainPathOnLayer:layer];
+                bringFrontLayer = layer;
             }
         }
-    }];
+    }
+    
+    if(bringFrontLayer != nil){
+        [bringFrontLayer removeFromSuperlayer];
+        [self.containerLayer insertSublayer:bringFrontLayer atIndex:(int)[self.containerLayer.sublayers count]];
+    }
 }
 
 #pragma mark Data Source Methods

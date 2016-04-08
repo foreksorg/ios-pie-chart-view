@@ -30,6 +30,9 @@
     [self.values addObject:[NSNumber numberWithInt:30]];
     [self.values addObject:[NSNumber numberWithInt:40]];
     [self.values addObject:[NSNumber numberWithInt:50]];
+    [self.values addObject:[NSNumber numberWithInt:30]];
+    [self.values addObject:[NSNumber numberWithInt:40]];
+    [self.values addObject:[NSNumber numberWithInt:50]];
     
     self.pieChartView.dataSource = self;
     self.pieChartView.delegate = self;
@@ -38,22 +41,19 @@
     self.pieChartView.borderColor = [MCUtil flatSunFlowerColor];
     self.pieChartView.selectedSliceColor = [MCUtil flatSunFlowerColor];
     self.pieChartView.textColor = [MCUtil flatSunFlowerColor];
-    self.pieChartView.selectedTextColor = [MCUtil flatWetAsphaltColor];
+    self.pieChartView.selectedTextColor = [UIColor whiteColor];
     self.pieChartView.borderPercentage = 0.01;
+    self.pieChartView.font =  [UIFont fontWithName:@"Helvetica" size:10.0];
 }
 
 - (NSInteger)numberOfSlicesInPieChartView:(MCPieChartView *)pieChartView {
     return self.values.count;
 }
 
-- (UIImage*)pieChartView:(MCPieChartView *)pieChartView imageForSliceAtIndex:(NSInteger)index
-{
-    if (index == 1) {
-        return [UIImage imageNamed:@"texture-yellow-dots"];
-    }
-    
-    return nil;
+-(NSString *)pieChartView:(MCPieChartView *)pieChartView textForSliceAtIndex:(NSInteger)index{
+    return @"asdassada \n asdasda";
 }
+
 //
 //- (UIColor*)pieChartView:(MCPieChartView *)pieChartView colorForTextAtIndex:(NSInteger)index
 //{
@@ -67,6 +67,9 @@
     return [[self.values objectAtIndex:index] floatValue];
 }
 
+-(NSString *)pieChartView:(MCPieChartView *)pieChartView selectedTextForSliceAtIndex:(NSInteger)index{
+    return @"asdassada \n asdasda";
+}
 - (IBAction)change:(id)sender {
     
     static int i = 0;
