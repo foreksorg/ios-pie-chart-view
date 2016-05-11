@@ -70,7 +70,7 @@ typedef enum {
 /*
  Method called after a slice is selected
  */
-- (void)pieChartView:(MCPieChartView*)pieChartView didSelectSliceAtIndex:(NSInteger)index;
+- (void)pieChartView:(MCPieChartView*)pieChartView didSelectSliceAtIndex:(NSInteger)index startAngle:(CGFloat)startAngle endAngle:(CGFloat)endAngle radius:(CGFloat)radius;
 
 @end
 

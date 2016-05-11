@@ -137,13 +137,11 @@
     
     NSInteger index = [self.containerLayer.sublayers indexOfObject:layer];
     
-    if ([self.delegate respondsToSelector:@selector(pieChartView:didSelectSliceAtIndex:)]) {
-        [self.delegate pieChartView:self didSelectSliceAtIndex:index];
-    }
-    
-    
-
     if ([layer isKindOfClass:[MCSliceLayer class]]) {
+        
+        if ([self.delegate respondsToSelector:@selector(pieChartView:didSelectSliceAtIndex: startAngle: endAngle: radius:)]) {
+            [self.delegate pieChartView:self didSelectSliceAtIndex:index startAngle:((MCSliceLayer*)layer).startAngle endAngle:((MCSliceLayer*)layer).endAngle radius:((MCSliceLayer*)layer).externalRadius];
+        }
         
         if (!self.allowsMultipleSelection) {
             for (MCSliceLayer *slice in self.containerLayer.sublayers) {
