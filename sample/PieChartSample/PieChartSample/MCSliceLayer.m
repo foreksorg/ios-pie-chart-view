@@ -22,6 +22,7 @@
 @dynamic center_x;
 @dynamic center_y;
 
+
 - (void)setDefaults
 {
     [super setDefaults];
