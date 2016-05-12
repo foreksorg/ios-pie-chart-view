@@ -70,7 +70,7 @@ typedef enum {
 /*
  Method called after a slice is selected
  */
-- (void)pieChartView:(MCPieChartView*)pieChartView didSelectSliceAtIndex:(NSInteger)index;
+- (void)pieChartView:(MCPieChartView*)pieChartView didSelectSliceAtIndex:(NSInteger)index selectionStatus:(MCNewCustomLayerSelectionStatus)status centerPoint:(CGPoint)center;
 
 @end
 
@@ -124,6 +124,11 @@ typedef enum {
  Defines weather the pie chart should display any kind of text on each slice.
  */
 @property (nonatomic) BOOL showText;
+
+/*
+ Defines weather the selected area looks bigger or not.
+ */
+@property (nonatomic) BOOL showSelectedAreaBigger;
 
 /*
  Defines the distance from the center should the text on each slice be drawn.

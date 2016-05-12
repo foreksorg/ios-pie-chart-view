@@ -22,12 +22,14 @@
 @dynamic center_x;
 @dynamic center_y;
 
+
 - (void)setDefaults
 {
     [super setDefaults];
     
     self.linePercentage             = 1.0;
     self.showText                   = YES;
+    self.showSelectedAreaBigger     = YES;
     self.selectedBackgroundColor    = [MCUtil iOS7DefaultBlueColor];
     self.fillColor                  = [MCUtil iOS7DefaultGrayColorForBackground].CGColor;
     self.strokeColor                = [MCUtil iOS7LightGrayColorForLines].CGColor;
@@ -130,6 +132,11 @@
     return transform;
 }
 
+-(CGPoint)getCenterPoint{
+    CGPoint point = [self getPathCenterWithRadiusPercentage:1];
+    point = CGPointApplyAffineTransform(point, [self getRotatedAffineTransform]);
+}
+
 - (void)customDrawInContext:(CGContextRef)context
 {
     CGAffineTransform transform = [self getRotatedAffineTransform];
@@ -157,6 +164,7 @@
             break;
     }
     
+    
     CGContextSetLineWidth(context, self.lineWidth - strokeWidth/2);
     CGContextAddPath(context, self.mainPath);
     CGContextReplacePathWithStrokedPath(context);
@@ -166,6 +174,7 @@
     
     CGFloat pathCenterRadiusPercentage = self.textDistancePercentageFromCenter;
     CGPoint pathCenter = [self getPathCenterWithRadiusPercentage:pathCenterRadiusPercentage];
+    
     pathCenter = CGPointApplyAffineTransform(pathCenter, transform);
     
     CGFloat width = 2*(sqrtf(powf(self.externalRadius*pathCenterRadiusPercentage, 2)*0.3));
@@ -178,6 +187,7 @@
             
             self.textLabel.center = CGPointMake(pathCenter.x, pathCenter.y);
             self.textLabel.layer.position = CGPointMake(pathCenter.x, pathCenter.y);
+            
             
             switch (self.selectionStatus) {
                 case MCNewCustomLayerSelectionStatusNotSelected:
@@ -340,8 +350,13 @@
     
     switch (status) {
         case MCNewCustomLayerSelectionStatusSelected:
-            self.center_x = pathCenter.x;
-            self.center_y = pathCenter.y;
+            if(self.showSelectedAreaBigger){
+                self.center_x = pathCenter.x;
+                self.center_y = pathCenter.y;
+            }else{
+                self.center_x = frameCenter.x;
+                self.center_y = frameCenter.y;
+            }
             break;
         case MCNewCustomLayerSelectionStatusNotSelected:
             self.center_x = frameCenter.x;
