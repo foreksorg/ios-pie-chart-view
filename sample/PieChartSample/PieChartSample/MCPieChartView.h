@@ -50,8 +50,8 @@ typedef enum {
 - (UIColor*)pieChartView:(MCPieChartView*)pieChartView colorForTextAtIndex:(NSInteger)index;
 
 /*
- Defines the text for each slice. If this method is not implemented the text shown will be defined 
- by the value of each slice and the property textStyle. If the property showText is set to NO, 
+ Defines the text for each slice. If this method is not implemented the text shown will be defined
+ by the value of each slice and the property textStyle. If the property showText is set to NO,
  no text will be shwon.
  */
 - (NSString *)pieChartView:(MCPieChartView*)pieChartView textForSliceAtIndex:(NSInteger)index;
@@ -70,7 +70,7 @@ typedef enum {
 /*
  Method called after a slice is selected
  */
-- (void)pieChartView:(MCPieChartView*)pieChartView didSelectSliceAtIndex:(NSInteger)index startAngle:(CGFloat)startAngle endAngle:(CGFloat)endAngle radius:(CGFloat)radius;
+- (void)pieChartView:(MCPieChartView*)pieChartView didSelectSliceAtIndex:(NSInteger)index selectionStatus:(MCNewCustomLayerSelectionStatus)status centerPoint:(CGPoint)center;
 
 @end
 
@@ -126,6 +126,11 @@ typedef enum {
 @property (nonatomic) BOOL showText;
 
 /*
+ Defines weather the selected area looks bigger or not.
+ */
+@property (nonatomic) BOOL showSelectedAreaBigger;
+
+/*
  Defines the distance from the center should the text on each slice be drawn.
  The default value is 0.6.
  a value equals 0 draws the text on the center of the pie chart
@@ -142,7 +147,7 @@ typedef enum {
 
 /*
  Defines how the text should be displayed.
- textStyle = MCPieChartViewTextStyleRealValue automatically sets the text equals to the 
+ textStyle = MCPieChartViewTextStyleRealValue automatically sets the text equals to the
  value of the slice (defined by - (CGFloat)pieChartView:(MCPieChartView*)pieChartView valueForSliceAtIndex:(NSInteger)index;)
  
  textStyle = MCPieChartViewTextStylePercentage automatically sets the text equals to the percentage

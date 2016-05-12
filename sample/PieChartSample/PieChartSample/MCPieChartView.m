@@ -27,6 +27,7 @@
     self.backgroundColor                = [UIColor clearColor];
     self.allowsMultipleSelection        = NO;
     self.showText                       = YES;
+    self.showSelectedAreaBigger         = YES;
     self.font                           = [UIFont systemFontOfSize:20];
     self.textColor                      = [MCUtil iOS7DarkGrayColorForLines];
     self.selectedTextColor              = [UIColor whiteColor];
@@ -71,6 +72,7 @@
     slice.startAngle                        = DEG2RAD(angle);
     slice.endAngle                          = DEG2RAD(angle+angleAddition);
     slice.showText                          = self.showText;
+    slice.showSelectedAreaBigger            = self.showSelectedAreaBigger;
     slice.textColor                         = [self textColorForSliceAtIndex:index];
     slice.strokePercentage                  = self.borderPercentage;
     slice.value                             = value;
@@ -99,7 +101,7 @@
     }
     
     angle += angleAddition;
-
+    
     return slice;
 }
 
@@ -139,10 +141,6 @@
     
     if ([layer isKindOfClass:[MCSliceLayer class]]) {
         
-        if ([self.delegate respondsToSelector:@selector(pieChartView:didSelectSliceAtIndex: startAngle: endAngle: radius:)]) {
-            [self.delegate pieChartView:self didSelectSliceAtIndex:index startAngle:((MCSliceLayer*)layer).startAngle endAngle:((MCSliceLayer*)layer).endAngle radius:((MCSliceLayer*)layer).externalRadius];
-        }
-        
         if (!self.allowsMultipleSelection) {
             for (MCSliceLayer *slice in self.containerLayer.sublayers) {
                 if (![slice isEqual:layer]) {
@@ -153,6 +151,11 @@
         
         MCSliceLayer *slice = (MCSliceLayer*)layer;
         slice.selectionStatus = 1-slice.selectionStatus;
+        
+        if ([self.delegate respondsToSelector:@selector(pieChartView:didSelectSliceAtIndex: selectionStatus: centerPoint:)]) {
+            
+            [self.delegate pieChartView:self didSelectSliceAtIndex:index selectionStatus:slice.selectionStatus centerPoint:[slice getCenterPoint]];
+        }
     }
 }
 

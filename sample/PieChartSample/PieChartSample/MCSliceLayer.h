@@ -35,6 +35,7 @@
 // external radius value, so that the slices are guaranteed to be
 // inside the container view's bounds when selected
 @property (nonatomic) CGFloat distancePercentageOnSelection;
+@property (nonatomic) BOOL showSelectedAreaBigger;
 
 @property (strong, nonatomic) UIColor *textColor;
 @property (strong, nonatomic) UIColor *selectedTextColor;
@@ -47,5 +48,7 @@
 @property (nonatomic) CGFloat internalRadius;
 
 @property (strong, nonatomic) id<MCSliceLayerDelegate> arcDelegate;
+
+-(CGPoint)getCenterPoint;
 
 @end

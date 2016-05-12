@@ -28,6 +28,7 @@
     
     self.linePercentage             = 1.0;
     self.showText                   = YES;
+    self.showSelectedAreaBigger     = YES;
     self.selectedBackgroundColor    = [MCUtil iOS7DefaultBlueColor];
     self.fillColor                  = [MCUtil iOS7DefaultGrayColorForBackground].CGColor;
     self.strokeColor                = [MCUtil iOS7LightGrayColorForLines].CGColor;
@@ -130,6 +131,11 @@
     return transform;
 }
 
+-(CGPoint)getCenterPoint{
+    CGPoint point = [self getPathCenterWithRadiusPercentage:1];
+    point = CGPointApplyAffineTransform(point, [self getRotatedAffineTransform]);
+}
+
 - (void)customDrawInContext:(CGContextRef)context
 {
     CGAffineTransform transform = [self getRotatedAffineTransform];
@@ -137,10 +143,10 @@
     CGFloat strokeWidth = (self.externalRadius - self.internalRadius)*self.strokePercentage;
     
     CGPathAddArc(self.mainPath, &transform,
-                    self.center_x, self.center_y,
-                    self.externalRadius - self.lineWidth/2,
-                    self.startAngle, self.endAngle,
-                    0);
+                 self.center_x, self.center_y,
+                 self.externalRadius - self.lineWidth/2,
+                 self.startAngle, self.endAngle,
+                 0);
     
     switch (self.selectionStatus) {
         case MCNewCustomLayerSelectionStatusNotSelected:
@@ -157,6 +163,7 @@
             break;
     }
     
+    
     CGContextSetLineWidth(context, self.lineWidth - strokeWidth/2);
     CGContextAddPath(context, self.mainPath);
     CGContextReplacePathWithStrokedPath(context);
@@ -166,6 +173,7 @@
     
     CGFloat pathCenterRadiusPercentage = self.textDistancePercentageFromCenter;
     CGPoint pathCenter = [self getPathCenterWithRadiusPercentage:pathCenterRadiusPercentage];
+    
     pathCenter = CGPointApplyAffineTransform(pathCenter, transform);
     
     CGFloat width = 2*(sqrtf(powf(self.externalRadius*pathCenterRadiusPercentage, 2)*0.3));
@@ -173,11 +181,15 @@
     if (self.showText) {
         if (fabsf(self.startAngle-self.endAngle) > DEG2RAD(20)) {
             self.textLabel.bounds = CGRectMake(0, 0,
-                                               width,
-                                               self.externalRadius*0.5);
+                                               10,
+                                               10);
             
             self.textLabel.center = CGPointMake(pathCenter.x, pathCenter.y);
             self.textLabel.layer.position = CGPointMake(pathCenter.x, pathCenter.y);
+            
+            
+            [self.textLabel setBackgroundColor:[UIColor grayColor]];
+            
             
             switch (self.selectionStatus) {
                 case MCNewCustomLayerSelectionStatusNotSelected:
@@ -295,34 +307,34 @@
     
     return point;
     
-//    CGFloat xc = self.center_x;
-//    CGFloat yc = self.center_y;
-//    
-//    CGPoint tanIntersectionPoint = [self getTanIntersectionPoint];
-//    CGFloat xt = tanIntersectionPoint.x;
-//    CGFloat yt = tanIntersectionPoint.y;
-//    
-//    CGFloat m = (yc - yt)/(xc - xt);
-//    CGFloat alpha = atanf(m);
-//    
-//    CGFloat x1, y1;
-//    CGFloat x2, y2;
-//    
-//    x1 = radius*cosf(alpha)+xc;
-//    y1 = radius*sinf(alpha)+yc;
-//    x2 = -radius*cosf(alpha)+xc;
-//    y2 = -radius*sinf(alpha)+yc;
-//    
-//    CGPoint fromPoint = CGPointMake(xt, yt);
-//    CGPoint point1 = CGPointMake(x1, y1);
-//    CGPoint point2 = CGPointMake(x2, y2);
-//    
-//    if (fabs(self.endAngle - self.startAngle) <= DEG2RAD(180)) {
-//        return [MCUtil getClosestPointFrom:fromPoint between:point1 and:point2];
-//    }
-//    else {
-//        return [MCUtil getFurthestPointFrom:fromPoint between:point1 and:point2];
-//    }
+    //    CGFloat xc = self.center_x;
+    //    CGFloat yc = self.center_y;
+    //
+    //    CGPoint tanIntersectionPoint = [self getTanIntersectionPoint];
+    //    CGFloat xt = tanIntersectionPoint.x;
+    //    CGFloat yt = tanIntersectionPoint.y;
+    //
+    //    CGFloat m = (yc - yt)/(xc - xt);
+    //    CGFloat alpha = atanf(m);
+    //
+    //    CGFloat x1, y1;
+    //    CGFloat x2, y2;
+    //
+    //    x1 = radius*cosf(alpha)+xc;
+    //    y1 = radius*sinf(alpha)+yc;
+    //    x2 = -radius*cosf(alpha)+xc;
+    //    y2 = -radius*sinf(alpha)+yc;
+    //
+    //    CGPoint fromPoint = CGPointMake(xt, yt);
+    //    CGPoint point1 = CGPointMake(x1, y1);
+    //    CGPoint point2 = CGPointMake(x2, y2);
+    //
+    //    if (fabs(self.endAngle - self.startAngle) <= DEG2RAD(180)) {
+    //        return [MCUtil getClosestPointFrom:fromPoint between:point1 and:point2];
+    //    }
+    //    else {
+    //        return [MCUtil getFurthestPointFrom:fromPoint between:point1 and:point2];
+    //    }
 }
 
 #pragma mark Selection Status Methods
@@ -340,8 +352,13 @@
     
     switch (status) {
         case MCNewCustomLayerSelectionStatusSelected:
-            self.center_x = pathCenter.x;
-            self.center_y = pathCenter.y;
+            if(self.showSelectedAreaBigger){
+                self.center_x = pathCenter.x;
+                self.center_y = pathCenter.y;
+            }else{
+                self.center_x = frameCenter.x;
+                self.center_y = frameCenter.y;
+            }
             break;
         case MCNewCustomLayerSelectionStatusNotSelected:
             self.center_x = frameCenter.x;
