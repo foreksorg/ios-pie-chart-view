@@ -181,14 +181,11 @@
     if (self.showText) {
         if (fabsf(self.startAngle-self.endAngle) > DEG2RAD(20)) {
             self.textLabel.bounds = CGRectMake(0, 0,
-                                               10,
-                                               10);
+                                               width,
+                                               self.externalRadius*0.5);
             
             self.textLabel.center = CGPointMake(pathCenter.x, pathCenter.y);
             self.textLabel.layer.position = CGPointMake(pathCenter.x, pathCenter.y);
-            
-            
-            [self.textLabel setBackgroundColor:[UIColor grayColor]];
             
             
             switch (self.selectionStatus) {
