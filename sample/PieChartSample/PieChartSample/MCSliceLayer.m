@@ -134,7 +134,7 @@
 
 -(CGPoint)getCenterPoint{
     CGPoint point = [self getPathCenterWithRadiusPercentage:1];
-    point = CGPointApplyAffineTransform(point, [self getRotatedAffineTransform]);
+    return point = CGPointApplyAffineTransform(point, [self getRotatedAffineTransform]);
 }
 
 - (void)customDrawInContext:(CGContextRef)context
