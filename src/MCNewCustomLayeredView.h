@@ -86,4 +86,6 @@
  */
 - (void)animate;
 
+- (void)reArrangeTextLabels:(float)radian;
+
 @end

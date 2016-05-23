@@ -38,6 +38,26 @@
     viewDidDraw = NO;
 }
 
+- (void)reArrangeTextLabels:(float)radian {
+    NSArray *layers = [self getAllItems];
+    
+    [layers enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        if ([obj isKindOfClass:[MCNewCustomLayer class]]) {
+            MCNewCustomLayer *layer = (MCNewCustomLayer *)obj;
+            CGAffineTransform rotationTransform = CGAffineTransformRotate([layer.textLabel transform], -1 * radian);
+            
+            [UIView animateWithDuration:1.0
+                                  delay:0.0
+                                options:UIViewAnimationOptionCurveEaseInOut
+                             animations:^{
+                                 layer.textLabel.transform = rotationTransform;
+                             }
+                             completion:^(BOOL finished){
+                             }];
+        }
+    }];
+}
+
 - (void)setUp {
     
 }
