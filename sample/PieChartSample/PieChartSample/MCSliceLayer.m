@@ -150,19 +150,19 @@
                  0);
     
     switch (self.selectionStatus) {
-        case MCNewCustomLayerSelectionStatusNotSelected:
-            if (!self.mainPathImage) {
-                CGContextSetFillColorWithColor(context, self.fillColor);
-            }
-            CGContextSetStrokeColorWithColor(context, self.strokeColor);
-            break;
-        case MCNewCustomLayerSelectionStatusSelected:
-            if (!self.mainPathImage) {
-                CGContextSetFillColorWithColor(context, self.selectedBackgroundColor.CGColor);
-            }
-            CGContextSetStrokeColorWithColor(context, self.selectedBackgroundColor.CGColor);
-            break;
-    }
+        case MCNewCustomLayerSelectionStatusNotSelected:
+            if (!self.mainPathImage) {
+                CGContextSetFillColorWithColor(context, self.fillColor);
+            }
+            CGContextSetStrokeColorWithColor(context, self.strokeColor);
+            break;
+        case MCNewCustomLayerSelectionStatusSelected:
+            if (!self.mainPathImage) {
+                CGContextSetFillColorWithColor(context, self.fillColor);
+            }
+            CGContextSetStrokeColorWithColor(context, self.selectedBackgroundColor.CGColor);
+            break;
+    }
     
     
     CGContextSetLineWidth(context, self.lineWidth - strokeWidth/2);
