@@ -37,7 +37,7 @@
     self.selectedTextColor          = [UIColor colorWithCGColor:self.fillColor];
     
     self.textDistancePercentageFromCenter = 0.6;
-    self.distancePercentageOnSelection = 0.1;
+    self.distancePercentageOnSelection = 0.02;
     self.strokePercentage = 0.005;
 }
 
