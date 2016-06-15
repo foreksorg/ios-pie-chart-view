@@ -180,7 +180,7 @@
     CGFloat width = 2*(sqrtf(powf(self.externalRadius*pathCenterRadiusPercentage, 2)*0.3));
     
     if (self.showText) {
-        if (fabsf(self.startAngle-self.endAngle) > DEG2RAD(20)) {
+        if (fabsf(self.startAngle-self.endAngle) > DEG2RAD(10)) {
             self.textLabel.bounds = CGRectMake(0, 0,
                                                width,
                                                self.externalRadius*0.5);
